@@ -11,6 +11,7 @@
 
 .navbar-wrapper .navbar {
     border-radius: 4px;
+    /*background-color: white;*/
 }
 
 
@@ -33,14 +34,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    min-width: 100%;
+    min-width: 100%; /* This rescales the image to fit the entire page width */
     height: 300px;
-}
-
-
-/* Center images in the carousel */
-.carousel-inner > .item > img,
-.carousel-inner > .item > a > img {
-    width: 100%;
     margin: auto;
 }
