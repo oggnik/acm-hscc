@@ -10,15 +10,13 @@
 }
 
 .navbar-wrapper .navbar {
-    border-radius: 4px;
-    /*background-color: white;*/
+    border-radius: 5px;
 }
 
 
 /* Carousel base class */
 .carousel {
     height: 300px;
-    margin-bottom: 60px;
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
@@ -37,4 +35,19 @@
     min-width: 100%; /* This rescales the image to fit the entire page width */
     height: 300px;
     margin: auto;
+}
+
+/* Give enough space on top to avoid the menu */
+.content {
+    margin-top: 30px;
+}
+
+hr {
+    border-width: 1px;
+    border-color: black;
+}
+
+/* Don't underline the link in the apply button */
+.apply-btn:hover {
+    text-decoration: none;
 }
