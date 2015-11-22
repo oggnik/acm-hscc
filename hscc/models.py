@@ -5,6 +5,7 @@ This file is responsible for defining models for the acm_hscc site
 """
 
 import datetime
+import enum
 import os
 import random
 import string
@@ -22,6 +23,23 @@ from hscc import mail
 def user_loader(user_id):
     """Unique user loader for the login manager"""
     return User.query.get(user_id)
+
+
+class State(enum.Enum):
+    """An enum of states allowed to register in this competition"""
+    Indiana = 0
+    Illinois = 1
+    Kentucky = 2
+    Michigan = 3
+    Wisconsin = 4
+
+
+class Grade(enum.Enum):
+    """An enum of grades allowed to register in this competition"""
+    Freshman = 0
+    Sophomore = 1
+    Junior = 2
+    Senior = 3
 
 
 class PasswordReset(db.Model):
@@ -66,20 +84,20 @@ class User(db.Model):
 
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    school_id = db.Column(db.Integer)
+    school_id = db.Column(db.Integer, db.ForeignKey('school.id'))
     name = db.Column(db.String(64))
     email = db.Column(db.String(64), index=True, unique=True)
     password = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean)
     pw_reset = db.relationship(PasswordReset, backref='user')
 
-    def __init__(self, name, email, password, school):
+    def __init__(self, name, email, password, school, is_admin=False):
         """Initialize a student model"""
         self.name = name
         self.email = email
         self.school = school
         self.set_password(password)
-        self.is_admin = False
+        self.is_admin = is_admin
 
     def __repr__(self):
         """Return a descriptive representation of a user"""

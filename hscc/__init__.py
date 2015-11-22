@@ -71,12 +71,14 @@ sys.stdout.write('Done\n')
 sys.stdout.write('Importing blueprints...')
 sys.stdout.flush()
 from hscc.controllers import mod_default
+from hscc.admin.controllers import mod_admin
 sys.stdout.write('Done\n')
 
 # Register blueprints
 sys.stdout.write('Registering blueprints...')
 sys.stdout.flush()
 app.register_blueprint(mod_default)
+app.register_blueprint(mod_admin)
 sys.stdout.write('Done\n')
 
 # All done!

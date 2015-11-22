@@ -14,6 +14,18 @@
                 <!-- Navbar buttons go here -->
                 {% if current_user.is_active %}
                     <!-- Logged in users -->
+                    {% if current_user.is_admin %}
+                        <!-- Administrators -->
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                Admin <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ url_for('admin.view_schools') }}">Schools</a></li>
+                                <li><a href="{{ url_for('admin.view_users') }}">Users</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
                 {% else %}
                     <!-- Users NOT logged in -->
                 {% endif %}
@@ -23,6 +35,9 @@
                 <!-- Navbar buttons go here -->
                 {% if current_user.is_active %}
                     <!-- Logged in users -->
+                    {% if current_user.is_admin %}
+                        <!-- Administrators -->
+                    {% endif %}
                     <form method="POST" action="{{ url_for('default.logout') }}" class="navbar-form navbar-right">
                       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                       <button class="btn btn-link" type="submit">Log Out</button>

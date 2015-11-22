@@ -5,6 +5,7 @@ from flask import render_template
 from flask import url_for
 
 from flask_login import login_user
+from flask_login import logout_user
 
 from hscc import db
 from hscc import flash_form_errors
@@ -57,6 +58,14 @@ def login():
     else:
         flash_form_errors(form)
         return render_template('login.html', form=form)
+
+
+@mod_default.route('/logout', methods=['POST'])
+@mod_default.route('/logout/', methods=['POST'])
+def logout():
+    """Log the user out of their account"""
+    logout_user()
+    return redirect(url_for('default.home'))
 
 
 @mod_default.route('/forgot', methods=['GET', 'POST'])

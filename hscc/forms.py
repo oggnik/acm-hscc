@@ -4,8 +4,6 @@ Author: Logan Gore
 This file lists all forms for the acm_hscc site
 """
 
-from enum import Enum
-
 from flask_wtf import Form
 
 from wtforms import BooleanField
@@ -15,26 +13,11 @@ from wtforms import SelectField
 from wtforms import TextField
 from wtforms import validators
 
+from hscc.models import Grade
 from hscc.models import School
+from hscc.models import State
 from hscc.models import User
 from hscc.models import PasswordReset
-
-
-class State(Enum):
-    """An enum of states allowed to register in this competition"""
-    Indiana = 0
-    Illinois = 1
-    Kentucky = 2
-    Michigan = 3
-    Wisconsin = 4
-
-
-class Grade(Enum):
-    """An enum of grades allowed to register in this competition"""
-    Freshman = 0
-    Sophomore = 1
-    Junior = 2
-    Senior = 3
 
 
 class RegistrationForm(Form):
@@ -60,7 +43,7 @@ class RegistrationForm(Form):
                 state=self.school_state.data,
             )
 
-        self.user = User.query.filter_by(email=self.email.data)
+        self.user = User.query.filter_by(email=self.email.data).first()
         if self.user:
             self.email.errors.append('An account with that email address has already registered')
             return False
@@ -165,7 +148,7 @@ class LoginForm(Form):
         if not Form.validate(self):
             return False
 
-        self.user = User.query.filter_by(email=self.email.data)
+        self.user = User.query.filter_by(email=self.email.data).first()
         if not self.user:
             self.email.errors.append('No account with that email found')
             return False
@@ -209,7 +192,7 @@ class ForgotForm(Form):
         if not Form.validate(self):
             return False
 
-        user = User.query.filter_by(email=self.email.data)
+        user = User.query.filter_by(email=self.email.data).first()
         if not user:
             self.email.errors.append('No account with that email found')
             return False
@@ -244,7 +227,7 @@ class NewPasswordForm(Form):
             return False
         # TODO
 
-        self.pw_reset = PasswordReset.query.filter_by(key=self.key.data)
+        self.pw_reset = PasswordReset.query.filter_by(key=self.key.data).first()
         if not self.pw_reset:
             self.key.errors.append('Invalid password reset key')
             return False
