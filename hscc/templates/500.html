@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}
+{% block body %}
+  <div class="page-header">
+    <h1>500 <small>Interal Server Error</small></h1>
+  </div>
+  <p>It looks like something went wrong internally! We'll get this checked out as soon as possible. In the mean time, you can check out the rest of the site from the <a href="{{ url_for('default.home') }}">home page</a>.</p>
+{% endblock %}
