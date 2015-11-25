@@ -55,6 +55,8 @@ class RegistrationForm(Form):
 
         if self.allergies_text.data:
             self.allergies = Allergies(text=self.allergies_text.data)
+        else:
+            self.allergies = Allergies(text='')
 
         team = Team.get_or_create(self.team_name.data, school)
         if team.school.id != school.id:
