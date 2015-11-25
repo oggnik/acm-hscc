@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <div class="page-header">
+        {% if school %}
+            <h1>{{school.name}} Students</h1>
+        {% else %}
+            <h1>All Users</h1>
+        {% endif %}
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Admin?</th>
+                <th>School</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{% if user.is_admin %}Yes{% else %}No{% endif %}</td>
+                <td>{{ user.school.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

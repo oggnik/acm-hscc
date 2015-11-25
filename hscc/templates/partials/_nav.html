@@ -1,0 +1,53 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main_nav_collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('default.home') }}">ACM</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="main_nav_collapse">
+            <ul class="nav navbar-nav">
+                <!-- Navbar buttons go here -->
+                {% if current_user.is_active %}
+                    <!-- Logged in users -->
+                    {% if current_user.is_admin %}
+                        <!-- Administrators -->
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                Admin <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ url_for('admin.view_schools') }}">Schools</a></li>
+                                <li><a href="{{ url_for('admin.view_users') }}">Users</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <!-- Users NOT logged in -->
+                {% endif %}
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <!-- Navbar buttons go here -->
+                {% if current_user.is_active %}
+                    <!-- Logged in users -->
+                    {% if current_user.is_admin %}
+                        <!-- Administrators -->
+                    {% endif %}
+                    <form method="POST" action="{{ url_for('default.logout') }}" class="navbar-form navbar-right">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                      <button class="btn btn-link" type="submit">Log Out</button>
+                    </form>
+                {% else %}
+                    <!-- Users NOT logged in -->
+                    <li><a href="{{ url_for('default.register') }}">Register</a></li>
+                    <li><a href="{{ url_for('default.login') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

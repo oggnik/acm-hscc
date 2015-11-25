@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+        <title>ACM HSCC</title>
+
+        <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    </head>
+
+    <body>
+        {% include 'partials/_nav.html' %}
+
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+              <div class="container">
+                {% for category, message in messages %}
+                  <div class="alert {{ category }} fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block no_container %}
+            <div class="container">
+                {% block body %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </body>
+</html>
