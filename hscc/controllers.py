@@ -34,8 +34,8 @@ def register():
     form = RegistrationForm()
 
     if form.validate_on_submit():
-        db.session.add(form.school)
         db.session.add(form.user)
+        db.session.add(form.allergies)
         db.session.commit()
 
         flash('You have successfully registered for the ACM-HSCC', 'alert-success')
@@ -54,6 +54,7 @@ def login():
 
     if form.validate_on_submit():
         login_user(form.user, remember=form.remember.data)
+        flash('You are now logged in to the ACM-HSCC site', 'alert-success')
         return redirect(url_for('default.home'))
     else:
         flash_form_errors(form)

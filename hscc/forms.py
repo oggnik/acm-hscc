@@ -11,11 +11,15 @@ from wtforms import HiddenField
 from wtforms import PasswordField
 from wtforms import SelectField
 from wtforms import TextField
+from wtforms import TextAreaField
 from wtforms import validators
 
+from hscc.models import Allergies
 from hscc.models import Grade
 from hscc.models import School
+from hscc.models import ShirtSize
 from hscc.models import State
+from hscc.models import Team
 from hscc.models import User
 from hscc.models import PasswordReset
 
@@ -26,19 +30,20 @@ class RegistrationForm(Form):
     def __init__(self, *args, **kwargs):
         """Initialize the registration form"""
         Form.__init__(self, *args, **kwargs)
-        self.school = None
         self.user = None
+        self.allergies = None
 
     def validate(self):
         """Validate the form"""
         if not Form.validate(self):
             return False
 
+        school = None
         if self.school_id.data and self.school_id.data.isdigit():
-            self.school = School.query.get(int(self.school_id.data))
+            school = School.query.get(int(self.school_id.data))
 
-        if not self.school:
-            self.school = School(
+        if not school:
+            school = School.get_or_create(
                 name=self.school_name.data,
                 state=self.school_state.data,
             )
@@ -48,13 +53,26 @@ class RegistrationForm(Form):
             self.email.errors.append('An account with that email address has already registered')
             return False
 
+        if self.allergies_text.data:
+            self.allergies = Allergies(text=self.allergies_text.data)
+
+        team = Team.get_or_create(self.team_name.data, school)
+        if team.school.id != school.id:
+            self.team_name.errors.append('Sorry, that team name is already registered at another school')
+            return False
+        elif len(team.users) == 2:
+            self.team_name.errors.append('Sorry, that team is already full (limit of 2 students per team)')
+            return False
+
         self.user = User(
             name=self.name.data,
             email=self.email.data,
-            school=self.school,
-            partner_email=self.partner_email.data,
-            grade=self.grade.data,
             password=self.password.data,
+            grade=self.grade.data,
+            shirt_size=self.shirt_size.data,
+            allergies=self.allergies,
+            school=school,
+            team=team,
         )
 
         return True
@@ -97,17 +115,8 @@ class RegistrationForm(Form):
     school_state = SelectField(
         'School State',
         choices=[(st.value, st.name) for st in State],
-        validators=[
-            validators.Required(message='Please provide your school state'),
-        ],
         coerce=int,
-    )
-
-    partner_email = TextField(
-        'Partner Email',
-        validators=[
-            validators.Optional(),
-        ],
+        default=0,
     )
 
     password = PasswordField(
@@ -125,14 +134,28 @@ class RegistrationForm(Form):
         ],
     )
 
+    team_name = TextField(
+        'Team Name',
+        validators=[
+            validators.Required(message='Please provide your school name'),
+        ],
+    )
+
     grade = SelectField(
         'Grade',
         choices=[(gr.value, gr.name) for gr in Grade],
-        validators=[
-            validators.Required(message='Please enter your grade in school'),
-        ],
         coerce=int,
+        default=0,
     )
+
+    shirt_size = SelectField(
+        'Shirt Size',
+        choices=[(sz.value[0], sz.value[1]) for sz in ShirtSize],
+        coerce=int,
+        default=0,
+    )
+
+    allergies_text = TextAreaField('Food Allergies')
 
 
 class LoginForm(Form):

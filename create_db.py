@@ -47,6 +47,10 @@ def populate_db_users():
             email='acm@purdue.edu',
             password=os.environ['ACM_HSCC_ADMIN_PASSWORD'],
             school=None,
+            team=None,
+            grade=None,
+            shirt_size=None,
+            allergies=None,
             is_admin=True,
         ),
     ]
