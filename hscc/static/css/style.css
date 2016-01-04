@@ -47,6 +47,10 @@ hr {
     border-color: black;
 }
 
+.code_image {
+    margin-top: 4em;
+}
+
 /* Don't underline the link in the apply button */
 .register-btn:hover {
     text-decoration: none;
