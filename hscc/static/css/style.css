@@ -48,7 +48,7 @@ hr {
 }
 
 /* Don't underline the link in the apply button */
-.apply-btn:hover {
+.register-btn:hover {
     text-decoration: none;
 }
 
