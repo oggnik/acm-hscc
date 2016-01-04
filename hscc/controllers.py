@@ -26,6 +26,11 @@ def home():
     """Render the index page for the ACM-HSCC site"""
     return render_template('index.html')
 
+@mod_default.route('/contact')
+@mod_default.route('/contact.html')
+def contact():
+    """Render the contact us page for the ACM-HSCC site"""
+    return render_template('contact.html')
 
 @mod_default.route('/register', methods=['GET', 'POST'])
 @mod_default.route('/register/', methods=['GET', 'POST'])
