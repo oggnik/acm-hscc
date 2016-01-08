@@ -1,4 +1,3 @@
-
 /* Special class on .container surrounding .navbar, used for positioning it into place. */
 .navbar-wrapper {
     position: absolute;
@@ -40,6 +39,7 @@
 /* Give enough space on top to avoid the menu */
 .content {
     margin-top: 30px;
+    padding-bottom: 20px;
 }
 
 hr {
@@ -47,12 +47,22 @@ hr {
     border-color: black;
 }
 
+.code_image {
+    margin-top: 4em;
+}
+
 /* Don't underline the link in the apply button */
-.apply-btn:hover {
+.register-btn:hover {
     text-decoration: none;
 }
 
 body {
     margin-top: 50px;
-    padding-bottom: 40px;
+}
+
+.footer {
+    /* Positioning stuff */
+
+    text-align: center;
+    background-color: #f5f5f5;
 }
