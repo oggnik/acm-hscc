@@ -44,7 +44,7 @@ class RegistrationForm(Form):
 
         if not school:
             school = School.get_or_create(
-                name=self.school_name.data,
+                name=self.school_name.data.upper(),
                 state=self.school_state.data,
             )
 

@@ -1,3 +1,4 @@
+from collections import Counter
 from functools import wraps
 
 from flask import Blueprint
@@ -12,7 +13,9 @@ from flask_login import login_required
 from hscc import db
 from hscc import flash_form_errors
 
+from hscc.models import Grade
 from hscc.models import School
+from hscc.models import ShirtSize
 from hscc.models import User
 
 mod_admin = Blueprint('admin', __name__, url_prefix='/admin')
@@ -58,3 +61,18 @@ def view_users(school_id=0):
     else:
         users = User.query.all()
     return render_template('admin/users.html', users=users, school=school)
+
+@mod_admin.route('/summary', methods=['GET'])
+@mod_admin.route('/summary/', methods=['GET'])
+@admin_required
+def summary():
+    """View a summary of registration statistics"""
+    users = User.query.filter_by(is_admin=False)
+    shirt_sizes = Counter(ShirtSize.get(u.shirt_size) for u in users)
+    grades = Counter(Grade.get(u.grade) for u in users)
+
+    return render_template(
+        'admin/summary.html',
+        shirt_sizes=shirt_sizes,
+        grades=grades,
+    )

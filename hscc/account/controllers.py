@@ -35,28 +35,56 @@ def edit():
 @mod_account.route('/my_school', methods=['GET'])
 @mod_account.route('/my_school/', methods=['GET'])
 def my_school():
-    pass
+    """Return the user's own school details"""
+    if current_user.school.id:
+        return redirect(url_for('account.school', id=current_user.school.id))
+    else:
+        return redirect(url_for('account.schools'))
 
 
 @mod_account.route('/school/<int:id>', methods=['GET'])
 @mod_account.route('/school/<int:id>/', methods=['GET'])
 def school(id):
-    pass
+    """Return the school with id <id>"""
+    sc = School.query.get(id)
+    if not sc:
+        # TODO: Error: No school found
+        return redirect(url_for('default.home'))
+    return render_template('account/school.html', school=sc)
+
+
+@mod_account.route('/schools', methods=['GET'])
+@mod_account.route('/schools/', methods=['GET'])
+def schools():
+    """Return a list of schools"""
+    sc = School.query.all()
+    return render_template('account/schools.html', schools=sc)
 
 
 @mod_account.route('/my_team', methods=['GET'])
 @mod_account.route('/my_team/', methods=['GET'])
 def my_team():
-    pass
+    """Return the user's own team details"""
+    if current_user.team.id:
+        return redirect(url_for('account.team', id=current_user.team.id))
+    else:
+        return redirect(url_for('account.teams'))
 
 
 @mod_account.route('/team/<int:id>', methods=['GET'])
 @mod_account.route('/team/<int:id>/', methods=['GET'])
 def team(id):
-    pass
+    """Return the team with id <id>"""
+    t = Team.query.get(id)
+    if not t:
+        # TODO: Error: No team found
+        return redirect(url_for('default.home'))
+    return render_teamplate('account/team.html', team=t)
 
 
 @mod_account.route('/teams/<int:school_id>', methods=['GET'])
 @mod_account.route('/teams/<int:school_id>/', methods=['GET'])
 def teams(school_id):
-    pass
+    """Return a list of teams from the school with id <school_id>"""
+    ts = Team.query.all()
+    return render_template('account/teams.html', teams=ts)
