@@ -1,10 +1,17 @@
 import sys
 
-from flask import Flask, flash, redirect, render_template, url_for
+from flask import Flask
+from flask import flash
+from flask import redirect
+from flask import render_template
+from flask import url_for
+
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_wtf.csrf import CsrfProtect
+
+from htmlmin.main import minify
 
 # Define the web app
 sys.stdout.write('Creating Flask app...')
@@ -57,6 +64,17 @@ def server_error(error):
     return render_template('500.html', error=error), 500
 sys.stdout.write('Done\n')
 
+# Minify sent HTML text
+sys.stdout.write('Loading HTML minifier...')
+sys.stdout.flush()
+@app.after_request
+def response_minify(response):
+    """Minify HTML response to reduce bandwidth"""
+    if response.content_type == u'text/html; charset=utf-8':
+        response.set_data(minify(response.get_data(as_text=True)))
+    return response
+sys.stdout.write('Done\n')
+
 # Define form error handler
 sys.stdout.write('Defining form error handler...')
 sys.stdout.flush()
@@ -71,6 +89,7 @@ sys.stdout.write('Done\n')
 sys.stdout.write('Importing blueprints...')
 sys.stdout.flush()
 from hscc.controllers import mod_default
+from hscc.account.controllers import mod_account
 from hscc.admin.controllers import mod_admin
 sys.stdout.write('Done\n')
 
@@ -78,6 +97,7 @@ sys.stdout.write('Done\n')
 sys.stdout.write('Registering blueprints...')
 sys.stdout.flush()
 app.register_blueprint(mod_default)
+app.register_blueprint(mod_account)
 app.register_blueprint(mod_admin)
 sys.stdout.write('Done\n')
 

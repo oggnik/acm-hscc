@@ -6,6 +6,7 @@ Flask-Login==0.3.2
 Flask-Mail==0.9.1
 Flask-SQLAlchemy==2.1
 Flask-WTF==0.12
+htmlmin==0.1.10
 itsdangerous==0.24
 Jinja2==2.8
 MarkupSafe==0.23

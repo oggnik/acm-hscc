@@ -28,19 +28,35 @@ def user_loader(user_id):
 
 class State(enum.Enum):
     """An enum of states allowed to register in this competition"""
-    Indiana = 0
-    Illinois = 1
-    Kentucky = 2
-    Michigan = 3
-    Wisconsin = 4
+    Indiana = (0, 'Indiana')
+    Illinois = (1, 'Illinois')
+    Kentucky = (2, 'Kentucky')
+    Michigan = (3, 'Michigan')
+    Wisconsin = (4, 'Wisconsin')
+
+    @classmethod
+    def get(cls, st):
+        """Retrieve the text representation of a State"""
+        for state in State:
+            if state.value[0] == st:
+                return state.value[1]
+        return None
 
 
 class Grade(enum.Enum):
     """An enum of grades allowed to register in this competition"""
-    Freshman = 0
-    Sophomore = 1
-    Junior = 2
-    Senior = 3
+    Freshman = (0, 'Freshman')
+    Sophomore = (1, 'Sophomore')
+    Junior = (2, 'Junior')
+    Senior = (3, 'Senior')
+
+    @classmethod
+    def get(cls, gr):
+        """Retrieve the text representation of a Grade"""
+        for grade in Grade:
+            if grade.value[0] == gr:
+                return grade.value[1]
+        return None
 
 
 class ShirtSize(enum.Enum):
@@ -52,6 +68,14 @@ class ShirtSize(enum.Enum):
     XLarge = (4, 'X-Large')
     XXLarge = (5, '2X-Large')
     XXXLarge = (6, '3X-Large')
+
+    @classmethod
+    def get(cls, sz):
+        """Retrieve the text representation of a ShirtSize"""
+        for shirt_size in ShirtSize:
+            if shirt_size.value[0] == sz:
+                return shirt_size.value[1]
+        return None
 
 
 class PasswordReset(db.Model):
@@ -143,6 +167,16 @@ class User(db.Model, UserMixin):
         """Check the user's password against the given value"""
         return check_password_hash(self.password, password)
 
+    @property
+    def grade_name(self):
+        """Get the text representation of the student's grade"""
+        return Grade.get(self.grade)
+
+    @property
+    def shirt_size_name(self):
+        """Get the text representation of the student's shirt size"""
+        return ShirtSize.get(self.shirt_size)
+
 
 class Team(db.Model):
     """Model representing a team"""
@@ -194,6 +228,11 @@ class School(db.Model):
     def __repr__(self):
         """Return a descriptive representation of a school"""
         return '<School %s>' % self.name
+
+    @property
+    def state_name(self):
+        """Get the text representation of the school's state"""
+        return State.get(self.state)
 
     @classmethod
     def get_or_create(cls, name, state):

@@ -116,7 +116,7 @@ class RegistrationForm(Form):
 
     school_state = SelectField(
         'School State',
-        choices=[(st.value, st.name) for st in State],
+        choices=[(st.value[0], st.value[1]) for st in State],
         coerce=int,
         default=0,
     )
@@ -145,7 +145,7 @@ class RegistrationForm(Form):
 
     grade = SelectField(
         'Grade',
-        choices=[(gr.value, gr.name) for gr in Grade],
+        choices=[(gr.value[0], gr.value[1]) for gr in Grade],
         coerce=int,
         default=0,
     )
@@ -250,7 +250,6 @@ class NewPasswordForm(Form):
         """Validate the form"""
         if not Form.validate(self):
             return False
-        # TODO
 
         self.pw_reset = PasswordReset.query.filter_by(key=self.key.data).first()
         if not self.pw_reset:

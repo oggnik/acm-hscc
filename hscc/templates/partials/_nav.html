@@ -14,6 +14,13 @@
                 <!-- Navbar buttons go here -->
                 {% if current_user.is_active %}
                     <!-- Logged in users -->
+                    <li><a href="{{ url_for('account.home') }}">My Account</a></li>
+                    {% if current_user.school %}
+                        <li><a href="{{ url_for('account.my_school') }}">My School</a></li>
+                    {% endif %}
+                    {% if current_user.team %}
+                        <li><a href="{{ url_for('account.my_team') }}">My Team</a></li>
+                    {% endif %}
                     {% if current_user.is_admin %}
                         <!-- Administrators -->
                         <li role="presentation" class="dropdown">
