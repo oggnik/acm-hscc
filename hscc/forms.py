@@ -139,7 +139,7 @@ class RegistrationForm(Form):
     team_name = TextField(
         'Team Name',
         validators=[
-            validators.Required(message='Please provide your school name'),
+            validators.Required(message='Please provide your team name'),
         ],
     )
 
