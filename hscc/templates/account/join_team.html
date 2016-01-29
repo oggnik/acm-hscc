@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="page-header">
+    <h1>Join New Team</h1>
+</div>
+
+<div class="content">
+    {% if current_user.team %}
+    <p style="color: red; font-size: 1.4em">
+        Warning: if you join this team, you will leave {{ current_user.team.name }}
+    </p>
+    {% endif %}
+
+    <p style="font-size: 1.2em">Are you sure you wish to join the following team:</p>
+    <center>
+        <p style="font-size: 2em">{{ team.name }}</p>
+
+        <br><br>
+    <form method="POST">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            {{ form.confirm }}
+            {{ form.confirm.label(class='control-label', style='font-size: 1.4em') }}
+        </div>
+
+        <button class="btn btn-primary" type="submit">Join Team</button>
+    </form>
+    </center>
+</div>
+
+{% endblock %}

@@ -1,1 +1,123 @@
-TODO
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="page-header">
+    <h1>Summary</h1>
+</div>
+
+<div class="content">
+    <h2>Users (Non-admin): {{ users|length }}</h2>
+
+    <h3>Grade Breakdown</h3>
+    <table class="table table-responsive table-striped">
+        <thead>
+            <th>Grade</th>
+            <th>Count</th>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Freshmen</td>
+                <td>{{ grades['Freshman'] }}</td>
+            </tr>
+
+            <tr>
+                <td>Sophomore</td>
+                <td>{{ grades['Sophomore'] }}</td>
+            </tr>
+
+            <tr>
+                <td>Junior</td>
+                <td>{{ grades['Junior'] }}</td>
+            </tr>
+
+            <tr>
+                <td>Senior</td>
+                <td>{{ grades['Senior'] }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>State Breakdown</h3>
+    <table class="table table-responsive table-striped">
+        <thead>
+            <th>State</th>
+            <th>Count</th>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Indiana</td>
+                <td>{{ states['Indiana'] }}</td>
+            </tr>
+
+            <tr>
+                <td>Illinois</td>
+                <td>{{ states['Illinois'] }}</td>
+            </tr>
+
+            <tr>
+                <td>Kentucky</td>
+                <td>{{ states['Kentucky'] }}</td>
+            </tr>
+
+            <tr>
+                <td>Michigan</td>
+                <td>{{ states['Michigan'] }}</td>
+            </tr>
+
+            <tr>
+                <td>Wisconsin</td>
+                <td>{{ states['Wisconsin'] }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Shirt Sizes</h3>
+    <table class="table table-responsive table-striped">
+        <thead>
+            <th>Size</th>
+            <th>Count</th>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>X-Small</td>
+                <td>{{ shirt_sizes['X-Small'] }}</td>
+            </tr>
+
+            <tr>
+                <td>Small</td>
+                <td>{{ shirt_sizes['Small'] }}</td>
+            </tr>
+
+            <tr>
+                <td>Medium</td>
+                <td>{{ shirt_sizes['Medium'] }}</td>
+            </tr>
+
+            <tr>
+                <td>Large</td>
+                <td>{{ shirt_sizes['Large'] }}</td>
+            </tr>
+
+            <tr>
+                <td>X-Large</td>
+                <td>{{ shirt_sizes['X-Large'] }}</td>
+            </tr>
+
+            <tr>
+                <td>2X-Large</td>
+                <td>{{ shirt_sizes['2X-Large'] }}</td>
+            </tr>
+
+            <tr>
+                <td>3X-Large</td>
+                <td>{{ shirt_sizes['3X-Large'] }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,1 +1,45 @@
-TODO
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="page-header">
+    <h1>{{ school.name }} ({{ school.state_name }})</h1>
+</div>
+
+<div class="content">
+    <h2>Student List</h2>
+    <table class="table table-striped">
+        <thead>
+            <th>Name</th>
+            <th>Team</th>
+            <th>Grade</th>
+            {% if current_user.is_admin %}
+                <th>Shirt Size</th>
+                <th>Allergies?</th>
+            {% endif %}
+        </thead>
+
+        <tbody>
+            {% for student in school.students %}
+            <tr>
+                <td>{{ student.name }}</td>
+                {% if student.team %}
+                    <td><a href="{{ url_for('account.team', id=student.team.id) }}">{{ student.team }}</a></td>
+                {% else %}
+                    <td><small>None</small></td>
+                {% endif %}
+                <td>{{ student.grade_name }}</td>
+                {% if current_user.is_admin %}
+                    <td>{{ student.shirt_size_name }}</td>
+                    {% if student.allergies.text %}
+                        <td>YES</td>
+                    {% else %}
+                        <td>NO</td>
+                    {% endif %}
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

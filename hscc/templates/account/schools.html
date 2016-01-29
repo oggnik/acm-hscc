@@ -1,1 +1,30 @@
-TODO
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="page-header">
+    <h1>Schools With Registered Users</h1>
+</div>
+
+<div class="content">
+    <table class="table table-striped">
+        <thead>
+            <th>Name</th>
+            <th>State</th>
+            <th># Students</th>
+            <th># Teams</th>
+        </thead>
+
+        <tbody>
+            {% for school in schools %}
+            <tr>
+                <td><a href="{{ url_for('account.school', id=school.id) }}">{{ school.name }}</a></td>
+                <td>{{ school.state_name }}</td>
+                <td>{{ school.students|length }}</td>
+                <td>{{ school.teams|length }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
