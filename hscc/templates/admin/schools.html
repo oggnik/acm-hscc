@@ -15,7 +15,7 @@
             {% for school in schools %}
                 <tr>
                     <td>{{ school.name }}</td>
-                    <td>{{ school.state.name }}</td>
+                    <td>{{ school.state_name }}</td>
                     <td><a href="{{ url_for('admin.view_users', school_id=school.id) }}">Students</a></td>
                 </tr>
             {% endfor %}

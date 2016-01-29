@@ -1,0 +1,94 @@
+{% extends 'layout.html' %}
+{% block body %}
+  <div class="page-header">
+    <h1>My Account</h1>
+  </div>
+
+  <div class="row col-md-6 col-lg-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{ current_user.name }}
+          <span class="pull-right">
+            <a href="{{ url_for('account.edit') }}">Edit Profile</a>
+          </span>
+        </h3>
+      </div>
+
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-12 col-lg-12">
+            <table class="table table-user-info">
+              <tbody>
+                <tr>
+                  <td>Name</td>
+                  <td>{{ current_user.name }}</td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>{{ current_user.email }}</td>
+                </tr>
+                <tr>
+                  <td>School</td>
+                  <td>
+                    {% if current_user.school %}
+                      <a href="{{ url_for('account.school', id=current_user.school.id) }}">
+                        {{ current_user.school.name }}
+                      </a>
+                    {% else %}
+                      <small>None</small>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>State</td>
+                  <td>
+                    {% if current_user.school %}
+                      {{ current_user.school.state_name }}
+                    {% else %}
+                      <small>None</small>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Team</td>
+                  <td>
+                    {% if current_user.team %}
+                      <a href="{{ url_for('account.team', id=current_user.team.id) }}">
+                        {{ current_user.team.name }}
+                      </a>
+                    {% else %}
+                      <small>None</small>
+                      {% if current_user.school %}
+                        <a href="{{ url_for('account.teams', school_id=current_user.school.id) }}">
+                          Join a team now!
+                        </a>
+                      {% endif %}
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Grade</td>
+                  <td>{{ current_user.grade_name }}</td>
+                </tr>
+                <tr>
+                  <td>Shirt Size</td>
+                  <td>{{ current_user.shirt_size_name }}</td>
+                </tr>
+                <tr>
+                  <td>Allergies</td>
+                  <td>{{ current_user.allergies.text }}</td>
+                </tr>
+                {% if current_user.is_admin %}
+                  <tr>
+                    <td colspan="2"><font color="red">Admin Account</font></td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
