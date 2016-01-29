@@ -4,6 +4,12 @@
         <h1>ACM High School Coding Competition</h1>
     </div>
     <!-- ===================== CONTENT ===================== -->
+    {% if current_user.is_authenticated and not current_user.team and current_user.school %}
+    <p>Hey! Looks like you aren't on a team yet. Why don't you join one
+        <a href="{{ url_for('account.school', id=current_user.school.id) }}">here!</a>
+    </p>
+
+    {% endif %}
     <div class="content">
         <div class="row" id="faq">
             <div class="col-xs-10 col-xs-offset-1 content">
@@ -37,7 +43,7 @@
                 <!-- When is it? -->
                 <div class="row question">
                     <h3>When is the competition?</h3>
-                    <p class="col-md-offset-1">Good Question, wish I knew.</p>
+                    <p class="col-md-offset-1">Saturday April 16, 2016 at Purdue University.</p>
                 </div>
                 <!-- What do I need to know? -->
                 <div class="row question">
