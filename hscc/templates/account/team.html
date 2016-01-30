@@ -16,11 +16,13 @@
 </div>
 
 <div class="content">
-    {% if team.users|length == 2 %}
-        <h2>Team Members (<b>FULL</b>)</h2>
-    {% else %}
-        <h2>Team Members ({{ team.users|length }} / 2)</h2>
-    {% endif %}
+    <h2>
+        Team Members:
+        {{ team.users|length }} / 2
+        {% if team.users|length == 2 %}
+            <b>(Full)</b>
+        {% endif %}
+    </h2>
     <table class="table table-striped">
         <thead>
             <th>Name</th>

@@ -20,11 +20,12 @@
                 <td><a href="{{ url_for('account.team', id=team.id) }}">{{ team.name }}</a></td>
                 <td><a href="{{ url_for('account.school', id=team.school.id) }}">{{ team.school.name }}</a></td>
                 <td>{{ team.school.state_name }}</td>
-                {% if team.users|length == 2 %}
-                    <td><b>FULL</b></td>
-                {% else %}
-                    <td>{{ team.users|length }} / 2</td>
-                {% endif %}
+                <td>
+                    {{ team.users|length }} / 2
+                    {% if team.users|length == 2 %}
+                        <b>(Full)</b>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

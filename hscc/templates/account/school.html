@@ -6,6 +6,36 @@
 </div>
 
 <div class="content">
+    <h2>Team List</h2>
+    <table class="table table-striped">
+        <thead>
+            <th>Name</th>
+            <th># Students</th>
+        </thead>
+
+        <tbody>
+            {% for team in school.teams %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('account.team', id=team.id) }}">{{ team.name }}</td>
+                <td>
+                    {{ team.users|length }} / 2
+                    {% if team.users|length == 2 %}
+                        <b>(Full)</b>
+                    {% endif %}
+                </td>
+                {% if team.users|length < 2 and current_user.school.id == team.school.id %}
+                    <td>
+                        <a class="btn btn-primary" href="{{ url_for('account.join_team', id=team.id) }}">
+                            Join Team
+                        </a>
+                    </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
     <h2>Student List</h2>
     <table class="table table-striped">
         <thead>
@@ -23,7 +53,7 @@
             <tr>
                 <td>{{ student.name }}</td>
                 {% if student.team %}
-                    <td><a href="{{ url_for('account.team', id=student.team.id) }}">{{ student.team }}</a></td>
+                    <td><a href="{{ url_for('account.team', id=student.team.id) }}">{{ student.team.name }}</a></td>
                 {% else %}
                     <td><small>None</small></td>
                 {% endif %}

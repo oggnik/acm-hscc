@@ -36,19 +36,19 @@ class JoinTeamForm(Form):
 
         new_team = Team.query.get(int(self.team_id.data))
         if not new_team:
-            team_id.errors.append('Team not found')
+            self.team_id.errors.append('Team not found')
             return False
 
         if current_user.team and new_team.id == current_user.team.id:
-            team_id.errors.append("You're already a member of this team")
+            self.team_id.errors.append("You're already a member of this team")
             return False
 
         if len(new_team.users) == 2:
-            team_id.errors.append('Oops! That team is already full!')
+            self.team_id.errors.append('Oops! That team is already full!')
             return False
 
         if new_team.school.id != current_user.school.id:
-            team_id.errors.append("Sorry, you can't join a team from another school")
+            self.team_id.errors.append("Sorry, you can't join a team from another school")
             return False
 
         current_user.team = new_team
