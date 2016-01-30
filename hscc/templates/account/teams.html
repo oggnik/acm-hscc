@@ -4,9 +4,6 @@
 <div class="page-header">
     <h1>
         Registered Teams
-        <span class="pull-right">
-            <a class="btn btn-primary" href="{{ url_for('account.create_team') }}">Create Team</a>
-        </span>
     </h1>
 </div>
 
@@ -29,6 +26,8 @@
                     {{ team.users|length }} / 2
                     {% if team.users|length == 2 %}
                         <b>(Full)</b>
+                    {% elif team.users|length == 0 %}
+                        <b>(Empty)</b>
                     {% endif %}
                 </td>
             </tr>
