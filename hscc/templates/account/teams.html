@@ -1,1 +1,40 @@
-TODO
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="page-header">
+    <h1>
+        Registered Teams
+        <span class="pull-right">
+            <a class="btn btn-primary" href="{{ url_for('account.create_team') }}">Create Team</a>
+        </span>
+    </h1>
+</div>
+
+<div class="content">
+    <table class="table table-striped">
+        <thead>
+            <th>Name</th>
+            <th>School</th>
+            <th>State</th>
+            <th># Students</th>
+        </thead>
+
+        <tbody>
+            {% for team in teams %}
+            <tr>
+                <td><a href="{{ url_for('account.team', id=team.id) }}">{{ team.name }}</a></td>
+                <td><a href="{{ url_for('account.school', id=team.school.id) }}">{{ team.school.name }}</a></td>
+                <td>{{ team.school.state_name }}</td>
+                <td>
+                    {{ team.users|length }} / 2
+                    {% if team.users|length == 2 %}
+                        <b>(Full)</b>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -21,6 +21,8 @@
                     {% if current_user.team %}
                         <li><a href="{{ url_for('account.my_team') }}">My Team</a></li>
                     {% endif %}
+                    <li><a href="{{ url_for('account.schools') }}">All Schools</a></li>
+                    <li><a href="{{ url_for('account.teams') }}">All Teams</a></li>
                     {% if current_user.is_admin %}
                         <!-- Administrators -->
                         <li role="presentation" class="dropdown">
@@ -30,13 +32,14 @@
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url_for('admin.view_schools') }}">Schools</a></li>
                                 <li><a href="{{ url_for('admin.view_users') }}">Users</a></li>
+                                <li><a href="{{ url_for('admin.summary') }}">Summary</a></li>
                             </ul>
                         </li>
                     {% endif %}
                 {% else %}
                     <!-- Users NOT logged in -->
                 {% endif %}
-                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="{{ url_for('default.contact') }}">Contact Us</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

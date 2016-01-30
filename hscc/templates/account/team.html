@@ -1,1 +1,43 @@
-TODO
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="page-header">
+    <h1>
+        {{ team.name }} &ndash; {{ team.school.name }}, {{ team.school.state_name }}
+        {% if true or current_user.school.id == team.school.id %}
+        <span class="pull-right">
+            <a class="btn btn-primary {% if team.users|length == 2 %}disabled {% endif %}"
+               href="{{ url_for('account.join_team', id=team.id) }}">
+                Join Team
+            </a>
+        </span>
+        {% endif %}
+    </h1>
+</div>
+
+<div class="content">
+    <h2>
+        Team Members:
+        {{ team.users|length }} / 2
+        {% if team.users|length == 2 %}
+            <b>(Full)</b>
+        {% endif %}
+    </h2>
+    <table class="table table-striped">
+        <thead>
+            <th>Name</th>
+            <th>Grade</th>
+        </thead>
+
+        <tbody>
+            {% for student in team.users %}
+            <tr>
+                <td>{{ student.name }}</td>
+                <td>{{ student.grade_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
