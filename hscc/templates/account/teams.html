@@ -2,7 +2,12 @@
 {% block body %}
 
 <div class="page-header">
-    <h1>Registered Teams</h1>
+    <h1>
+        Registered Teams
+        <span class="pull-right">
+            <a class="btn btn-primary" href="{{ url_for('account.create_team') }}">Create Team</a>
+        </span>
+    </h1>
 </div>
 
 <div class="content">

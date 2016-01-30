@@ -10,7 +10,9 @@ from flask_wtf import Form
 from wtforms import BooleanField
 from wtforms import HiddenField
 from wtforms import SelectField
+from wtforms import TextField
 from wtforms import TextAreaField
+from wtforms import validators 
 
 from hscc.models import Allergies
 from hscc.models import Grade
@@ -18,11 +20,42 @@ from hscc.models import ShirtSize
 from hscc.models import Team
 
 
+class CreateTeamForm(Form):
+    """A form for creating a new team"""
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the form"""
+        Form.__init__(self, *args, **kwargs)
+        self.team = None
+
+    def validate(self):
+        """Validate the form"""
+        if not Form.validate(self):
+            return False
+
+        # Make sure the team doesn't already exist
+        self.team = Team.query.filter(Team.name.ilike(self.team_name.data)).first()
+        if self.team:
+            self.team_name.errors.append('Sorry, that team name is already registered')
+            return False
+
+        self.team = Team.get_or_create(self.team_name.data, current_user.school)
+        current_user.team = self.team
+        return True
+
+    team_name = TextField(
+        'Team Name',
+        validators=[
+            validators.Required(message='You must provide a team name'),
+        ],
+    )
+
+
 class JoinTeamForm(Form):
     """A form for joining a team"""
 
     def __init__(self, *args, **kwargs):
-        """Initialize the registration form"""
+        """Initialize the form"""
         Form.__init__(self, *args, **kwargs)
 
     def validate(self):
@@ -63,7 +96,7 @@ class EditAccountForm(Form):
     """A form for editing a user account"""
 
     def __init__(self, *args, **kwargs):
-        """Initialize the registration form"""
+        """Initialize the form"""
         Form.__init__(self, *args, **kwargs)
 
     def validate(self):

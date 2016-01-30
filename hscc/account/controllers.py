@@ -14,6 +14,7 @@ from hscc.models import School
 from hscc.models import Team
 from hscc.models import User
 
+from hscc.account.forms import CreateTeamForm
 from hscc.account.forms import EditAccountForm
 from hscc.account.forms import JoinTeamForm
 
@@ -75,6 +76,23 @@ def schools():
     """Return a list of schools"""
     sc = School.query.all()
     return render_template('account/schools.html', schools=sc)
+
+
+@mod_account.route('/create_team', methods=['GET', 'POST'])
+@mod_account.route('/create_team/', methods=['GET', 'POST'])
+def create_team():
+    """Create a new team"""
+    form = CreateTeamForm()
+
+    if form.validate_on_submit():
+        db.session.add(form.team)
+        db.session.commit()
+
+        flash('You are now a member of {}'.format(form.team.name), 'alert-success')
+        return redirect(url_for('account.my_team'))
+    else:
+        flash_form_errors(form)
+        return render_template('account/create_team.html', form=form)
 
 
 @mod_account.route('/join_team/<int:id>', methods=['GET', 'POST'])
