@@ -23,6 +23,7 @@
                     {% endif %}
                     <li><a href="{{ url_for('account.schools') }}">All Schools</a></li>
                     <li><a href="{{ url_for('account.teams') }}">All Teams</a></li>
+                    <li><a href="{{ url_for('account.create_team') }}">Create New Team</a></li>
                     {% if current_user.is_admin %}
                         <!-- Administrators -->
                         <li role="presentation" class="dropdown">
