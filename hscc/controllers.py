@@ -26,6 +26,10 @@ def home():
     """Render the index page for the ACM-HSCC site"""
     return render_template('index.html')
 
+@mod_default.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(os.path.join(app.root_path, 'static'), 'images'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 @mod_default.route('/contact')
 @mod_default.route('/contact.html')
 def contact():
