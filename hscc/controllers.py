@@ -1,7 +1,9 @@
 from flask import Blueprint
 from flask import flash
+from flask import jsonify
 from flask import redirect
 from flask import render_template
+from flask import request
 from flask import url_for
 
 from flask_login import login_user
@@ -14,6 +16,9 @@ from hscc.forms import ForgotForm
 from hscc.forms import LoginForm
 from hscc.forms import NewPasswordForm
 from hscc.forms import RegistrationForm
+
+from hscc.models import School
+from hscc.models import Team
 
 mod_default = Blueprint('default', __name__)
 
@@ -114,3 +119,23 @@ def reset_pass(key):
         flash_form_errors(form)
         form.key.data = key
         return render_template('reset_pass.html', form=form)
+
+
+@mod_default.route('/autocomplete/schools', methods=['GET'])
+@mod_default.route('/autocomplete/schools/', methods=['GET'])
+def autocomplete_schools():
+    """Return a list of schools for the autocomplete field"""
+    schools = School.query.all()
+    return jsonify(json_list=[school.name for school in schools])
+
+
+@mod_default.route('/autocomplete/teams', methods=['GET'])
+@mod_default.route('/autocomplete/teams/', methods=['GET'])
+def autocomplete_teams():
+    """Return a list of schools for the autocomplete field"""
+    school_name = request.args.get('school_name')
+    school = School.query.filter(School.name.ilike(school_name)).first()
+    if not school:
+        return jsonify(**{})
+
+    return jsonify(json_list=[t.name for t in school.teams])

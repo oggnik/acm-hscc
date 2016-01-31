@@ -39,15 +39,15 @@
             </div>
         </div>
         <div class="form-group">
-            {{ form.team_name.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.team_name(class='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
             {{ form.school_name.label(class='control-label col-sm-4') }}
             <div class="col-sm-8">
                 {{ form.school_name(class='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.team_name.label(class='control-label col-sm-4') }}
+            <div class="col-sm-8">
+                {{ form.team_name(class='form-control') }}
             </div>
         </div>
         <div class="form-group">
@@ -86,4 +86,37 @@
         </div>
     </form>
 </div>
+
+<script>
+    var school_name = document.getElementById("school_name");
+    school_name = new Awesomplete(school_name, {
+        list: [],
+        minChars: 1
+    });
+
+    var team_name = document.getElementById("team_name");
+    team_name = new Awesomplete(team_name, {
+        list: [],
+        minChars: 1
+    });
+
+    $('#school_name').click(function() {
+        $.ajax({
+            url: "{{ url_for('default.autocomplete_schools') }}",
+        }).done(function(data) {
+            school_name.list = data['json_list'];
+        });
+    });
+
+    $('#team_name').click(function() {
+        console.log('Load teams from ' + $('#school_name').val());
+        $.ajax({
+            url: "{{ url_for('default.autocomplete_teams') }}",
+            data: {school_name: $('#school_name').val()}
+        }).done(function(data) {
+            team_name.list = data['json_list'];
+        });
+    });
+</script>
+
 {% endblock %}
