@@ -128,10 +128,12 @@
 
         <tbody>
             {% for user in users %}
-            <tr>
-                <td>{{user.name}}</td>
-                <td>{{user.allergies.text}}</td>
-            </tr>
+            {% if user.allergies.text %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.allergies.text }}</td>
+                </tr>
+            {% endif %}
             {% endfor %}
         </tbody>
     </table>
