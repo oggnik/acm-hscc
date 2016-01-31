@@ -1,0 +1,2 @@
+#!/bin/bash
+uwsgi --plugins python -s 127.0.0.1:3031 -w hscc:app --processes 4 --threads 2
