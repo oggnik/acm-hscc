@@ -118,6 +118,25 @@
 
         </tbody>
     </table>
+
+    <h3>Allergies</h3>
+    <table class="table table-responsive table-striped">
+        <thead>
+            <th>Student</th>
+            <th>Allergy</th>
+        </thead>
+
+        <tbody>
+            {% for user in users %}
+            {% if user.allergies.text %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.allergies.text }}</td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 {% endblock %}
