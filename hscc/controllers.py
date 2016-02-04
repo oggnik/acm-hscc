@@ -17,6 +17,7 @@ from hscc.forms import LoginForm
 from hscc.forms import NewPasswordForm
 from hscc.forms import RegistrationForm
 
+from hscc.models import Language
 from hscc.models import School
 from hscc.models import Team
 
@@ -139,3 +140,10 @@ def autocomplete_teams():
         return jsonify(**{})
 
     return jsonify(json_list=[t.name for t in school.teams])
+
+@mod_default.route('/autocomplete/languages', methods=['GET'])
+@mod_default.route('/autocomplete/languages/', methods=['GET'])
+def autocomplete_languages():
+    """Return a list of languages for the autocomplete field"""
+    languages = Language.query.all()
+    return jsonify(json_list=[language.name for language in languages])

@@ -16,6 +16,7 @@ from wtforms import validators
 
 from hscc.models import Allergies
 from hscc.models import Grade
+from hscc.models import Language
 from hscc.models import School
 from hscc.models import ShirtSize
 from hscc.models import State
@@ -58,6 +59,8 @@ class RegistrationForm(Form):
         else:
             self.allergies = Allergies(text='')
 
+        language = Language.get_or_create(self.language.data)
+
         team = Team.get_or_create(self.team_name.data, school)
         if team.school.id != school.id:
             self.team_name.errors.append('Sorry, that team name is already registered at another school')
@@ -72,6 +75,7 @@ class RegistrationForm(Form):
             password=self.password.data,
             grade=self.grade.data,
             shirt_size=self.shirt_size.data,
+            language=language,
             allergies=self.allergies,
             school=school,
             team=team,
@@ -157,7 +161,14 @@ class RegistrationForm(Form):
         default=0,
     )
 
-    allergies_text = TextAreaField('Food Allergies')
+    language = TextField(
+        'Preferred Programming Language',
+        validators=[
+            validators.Required(message='Please enter your preferred programming language'),
+        ],
+    )
+
+    allergies_text = TextAreaField('Allergies or Health Concerns')
 
 
 class LoginForm(Form):
