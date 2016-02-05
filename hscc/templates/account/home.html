@@ -79,6 +79,10 @@
                   <td>Allergies</td>
                   <td>{{ current_user.allergies.text }}</td>
                 </tr>
+                <tr>
+                  <td>Preferred Languages</td>
+                  <td>{{ current_user.language.name }}</td>
+                </tr>
                 {% if current_user.is_admin %}
                   <tr>
                     <td colspan="2"><font color="red">Admin Account</font></td>
