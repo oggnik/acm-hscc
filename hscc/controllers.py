@@ -51,6 +51,11 @@ def register():
     if form.validate_on_submit():
         db.session.add(form.user)
         db.session.add(form.allergies)
+        # Hacky solution time! If a student misspelled their school name then
+        # had to go through registration again, there may be an empty school
+        # This query returns a list of schools with no students
+        for empty_school in School.query.filter(~School.students.any()):
+            db.session.delete(empty_school)
         db.session.commit()
 
         flash('You have successfully registered for the ACM-HSCC', 'alert-success')
