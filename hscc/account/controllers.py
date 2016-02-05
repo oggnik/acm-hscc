@@ -44,9 +44,11 @@ def edit():
         flash_form_errors(form)
         form.grade.data = current_user.grade
         form.shirt_size.data = current_user.shirt_size
+        if current_user.language:
+            language = current_user.language.name
         if current_user.allergies:
             form.allergies_text.data = current_user.allergies.text
-        return render_template('account/edit.html', form=form)
+        return render_template('account/edit.html', form=form, lang=language)
 
 
 @mod_account.route('/my_school', methods=['GET'])

@@ -163,9 +163,7 @@ class RegistrationForm(Form):
 
     language = TextField(
         'Preferred Programming Language',
-        validators=[
-            validators.Required(message='Please enter your preferred programming language'),
-        ],
+        validators=[],
     )
 
     allergies_text = TextAreaField('Allergies or Health Concerns')

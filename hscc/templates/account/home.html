@@ -72,6 +72,16 @@
                   <td>{{ current_user.grade_name }}</td>
                 </tr>
                 <tr>
+                  <td>Preferred Language</td>
+                  <td>
+                    {% if current_user.language %}
+                      {{ current_user.language.name }}
+                    {% else %}
+                      <small>None</small>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
                   <td>Shirt Size</td>
                   <td>{{ current_user.shirt_size_name }}</td>
                 </tr>
