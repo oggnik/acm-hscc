@@ -52,6 +52,7 @@ def populate_db_users():
             shirt_size=None,
             allergies=None,
             is_admin=True,
+            language=None,
         ),
     ]
     db.session.add_all(users)
