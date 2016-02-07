@@ -20,6 +20,7 @@ from hscc.forms import RegistrationForm
 from hscc.models import Language
 from hscc.models import School
 from hscc.models import Team
+from hscc.models import User
 
 mod_default = Blueprint('default', __name__)
 
@@ -152,3 +153,15 @@ def autocomplete_languages():
     """Return a list of languages for the autocomplete field"""
     languages = Language.query.all()
     return jsonify(json_list=[language.name for language in languages])
+
+
+@mod_default.route('/validate/email', methods=['GET'])
+def validate_email():
+    email = request.args.get('email')
+    if len(email) == 0:
+        return jsonify({'valid': False, 'error': 'Please provide an email address'})
+    user = User.query.filter_by(email=email).first()
+    if user:
+        # The email already exists
+        return jsonify({'valid': False, 'error': 'An account with that email address has already registered'})
+    return jsonify({'valid': True})
