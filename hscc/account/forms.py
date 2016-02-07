@@ -12,10 +12,11 @@ from wtforms import HiddenField
 from wtforms import SelectField
 from wtforms import TextField
 from wtforms import TextAreaField
-from wtforms import validators 
+from wtforms import validators
 
 from hscc.models import Allergies
 from hscc.models import Grade
+from hscc.models import Language
 from hscc.models import ShirtSize
 from hscc.models import Team
 
@@ -109,6 +110,9 @@ class EditAccountForm(Form):
         else:
             self.allergies = Allergies(text='')
 
+        if self.language.data:
+            current_user.language = Language.get_or_create(self.language.data)
+
         current_user.grade = self.grade.data
         current_user.shirt_size = self.shirt_size.data
         current_user.allergies = self.allergies
@@ -120,6 +124,11 @@ class EditAccountForm(Form):
         choices=[(gr.value[0], gr.value[1]) for gr in Grade],
         coerce=int,
         default=0,
+    )
+
+    language = TextField(
+        'Preferred Language',
+        validators=[],
     )
 
     shirt_size = SelectField(

@@ -71,6 +71,10 @@
                   <td>{{ form.grade(class='form-control') }}</td>
                 </tr>
                 <tr>
+                  <td>Preferred Language</td>
+                  <td>{{ form.language(class='form-control', placeholder=lang) }}</td>
+                </tr>
+                <tr>
                   <td>Shirt Size</td>
                   <td>{{ form.shirt_size(class='form-control') }}</td>
                 </tr>
@@ -93,4 +97,20 @@
     <button type="submit" class="btn btn-primary">Submit Changes</button>
   </div>
   </form>
+
+  <script>
+      var language = document.getElementById("language");
+      language = new Awesomplete(language, {
+          list: [],
+          minChars: 1
+      });
+
+      $('#language').focus(function() {
+          $.ajax({
+              url: "{{ url_for('default.autocomplete_languages') }}",
+          }).done(function(data) {
+              language.list = data['json_list'];
+          });
+      });
+  </script>
 {% endblock %}

@@ -6,6 +6,21 @@
 </div>
 
 <div class="content">
+    <h2>Language Statistics</h2>
+    <table class="table table-responsive table-striped">
+        <thead>
+            <th>Language</th>
+            <th>Count</th>
+        </thead>
+        <tbody>
+            {% for lang in languages %}
+            <tr>
+                <td>{{ lang }}</td>
+                <td>{{ languages[lang] }}</td>
+            </tr>
+            {% endfor %}
+    </table>
+
     <h2>Users (Non-admin): {{ users|length }}</h2>
 
     <h3>Grade Breakdown</h3>

@@ -26,6 +26,20 @@ def user_loader(user_id):
     return User.query.get(user_id)
 
 
+class Status(enum.Enum):
+    """An enum of user states in terms of being accepted"""
+    Applied = (0, 'Applied')
+    Accepted = (1, 'Accepted')
+    Waitlisted = (2, 'Waitlisted')
+
+    @classmethod
+    def get(cls, st):
+        """Retrieve the text representation of a State"""
+        for status in Status:
+            if status.value[0] == st:
+                return status.value[1]
+        return None
+
 class State(enum.Enum):
     """An enum of states allowed to register in this competition"""
     Indiana = (0, 'Indiana')
@@ -123,6 +137,24 @@ class Allergies(db.Model):
     text = db.Column(db.String(256))
 
 
+class Language(db.Model):
+    """Model representing a programming language"""
+
+    __tablename__ = 'language'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(256))
+
+    @classmethod
+    def get_or_create(cls, name):
+        """Retrieve a language or create a new one if the name isn't in use"""
+        language = Language.query.filter(Language.name.ilike(name)).first()
+        if not language:
+            language = Language(name=name)
+            db.session.add(language)
+            db.session.commit()
+        return language
+
+
 class User(db.Model, UserMixin):
     """Model representing a basic site user"""
 
@@ -132,18 +164,21 @@ class User(db.Model, UserMixin):
     school_id = db.Column(db.Integer, db.ForeignKey('school.id'))
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
     allergies_id = db.Column(db.Integer, db.ForeignKey('allergies.id'))
+    language_id = db.Column(db.Integer, db.ForeignKey('language.id'))
 
     name = db.Column(db.String(64))
     email = db.Column(db.String(64), index=True, unique=True)
     password = db.Column(db.String(128))
     grade = db.Column(db.Integer)
     shirt_size = db.Column(db.Integer)
+    status = db.Column(db.Integer)
     is_admin = db.Column(db.Boolean)
 
+    language = db.relationship(Language)
     allergies = db.relationship(Allergies, backref='user')
     pw_reset = db.relationship(PasswordReset, backref='user')
 
-    def __init__(self, name, email, password, school, team, grade, shirt_size, allergies, is_admin=False):
+    def __init__(self, name, email, password, school, team, grade, shirt_size, language, allergies, is_admin=False):
         """Initialize a student model"""
         self.name = name
         self.email = email
@@ -152,7 +187,9 @@ class User(db.Model, UserMixin):
         self.team = team
         self.grade = grade
         self.shirt_size = shirt_size
+        self.language = language
         self.allergies = allergies
+        self.status = Status.Applied.value[0]
         self.is_admin = is_admin
 
     def __repr__(self):
@@ -176,6 +213,11 @@ class User(db.Model, UserMixin):
     def shirt_size_name(self):
         """Get the text representation of the student's shirt size"""
         return ShirtSize.get(self.shirt_size)
+
+    @property
+    def status_name(self):
+        """Get the text representation of the student's application status"""
+        return Status.get(self.status)
 
 
 class Team(db.Model):

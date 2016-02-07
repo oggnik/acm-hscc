@@ -14,6 +14,7 @@ from hscc import db
 from hscc import flash_form_errors
 
 from hscc.models import Grade
+from hscc.models import Language
 from hscc.models import School
 from hscc.models import ShirtSize
 from hscc.models import State
@@ -69,6 +70,7 @@ def view_users(school_id=0):
 def summary():
     """View a summary of registration statistics"""
     users = User.query.filter_by(is_admin=False).all()
+    languages = Counter(u.language.name for u in users if u.language)
     shirt_sizes = Counter(ShirtSize.get(u.shirt_size) for u in users)
     grades = Counter(Grade.get(u.grade) for u in users)
     states = Counter(State.get(u.school.state) for u in users if u.school)
@@ -76,6 +78,7 @@ def summary():
     return render_template(
         'admin/summary.html',
         users=users,
+        languages=languages,
         shirt_sizes=shirt_sizes,
         grades=grades,
         states=states,
