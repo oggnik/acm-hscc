@@ -64,12 +64,16 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <div id="teamFormGroup" class="form-group" aria-describedby="teamHelpBlock">
             <div class="row">
                 {{ form.team_name.label(class='control-label col-sm-4') }}
                 <div class="col-sm-8">
                     {{ form.team_name(class='form-control') }}
+                    <span id="teamGlyph" class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 </div>
+            </div>
+            <div class="row">
+                <div id="teamHelpBlock" class="help-block col-sm-8 col-sm-offset-4"></div>
             </div>
         </div>
         <div class="form-group">
@@ -175,7 +179,7 @@
 
     $('#email').focusout(function() {
         $.ajax({
-            url: "{{ url_for('default.validate_email') }}",
+            url: "{{ url_for('default.validate_register_email') }}",
             data: {email: $('#email').val()}
         }).done(function(data) {
             var valid = data['valid'];
@@ -221,6 +225,34 @@
             $('#confirmEmailFormGroup').addClass('has-success');
             $('#confirmEmailFormGroup').addClass('has-feedback');
         }
+    });
+
+    $('#team_name').focusout(function() {
+        $.ajax({
+            url: "{{ url_for('default.validate_register_team') }}",
+            data: {team: $('#team_name').val(), school: $('#school_name').val()}
+        }).done(function(data) {
+            var valid = data['valid'];
+            if (valid) {
+                $('#teamHelpBlock').text('');
+                $('#teamHelpBlock').hide();
+                $('#teamGlyph').removeClass('glyphicon-remove');
+                $('#teamGlyph').addClass('glyphicon-ok');
+                $('#teamGlyph').show();
+                $('#teamFormGroup').removeClass('has-error');
+                $('#teamFormGroup').addClass('has-success');
+                $('#teamFormGroup').addClass('has-feedback');
+            } else {
+                $('#teamHelpBlock').text(data['error']);
+                $('#teamHelpBlock').show();
+                $('#teamGlyph').addClass('glyphicon-remove');
+                $('#teamGlyph').removeClass('glyphicon-ok');
+                $('#teamGlyph').show();
+                $('#teamFormGroup').addClass('has-error');
+                $('#teamFormGroup').removeClass('has-success');
+                $('#teamFormGroup').addClass('has-feedback');
+            }
+        });
     });
 
 </script>

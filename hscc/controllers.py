@@ -155,8 +155,9 @@ def autocomplete_languages():
     return jsonify(json_list=[language.name for language in languages])
 
 
-@mod_default.route('/validate/email', methods=['GET'])
-def validate_email():
+@mod_default.route('/validate/register/email', methods=['GET'])
+def validate_register_email():
+    """Checks an email address for potential conflicts"""
     email = request.args.get('email')
     if len(email) == 0:
         return jsonify({'valid': False, 'error': 'Please provide an email address'})
@@ -164,4 +165,24 @@ def validate_email():
     if user:
         # The email already exists
         return jsonify({'valid': False, 'error': 'An account with that email address has already registered'})
+    return jsonify({'valid': True})
+
+@mod_default.route('/validate/register/team', methods=['GET'])
+def validate_register_team():
+    """Checks a team name for potential conflicts"""
+    team = request.args.get('team')
+    school_name = request.args.get('school')
+    if len(team) == 0:
+        # No team name
+        return jsonify({'valid': False, 'error': 'Please specify a team name'})
+
+    school = School.query.filter(School.name.ilike(school_name)).first()
+    team = Team.query.filter(Team.name.ilike(team)).first()
+    if team and school:
+        if team.school.id != school.id:
+            # The team is already registered to another school
+            return jsonify({'valid': False, 'error': 'Sorry, that team name is already registered at another school'})
+    if team and len(team.users) == 2:
+        # The team alread is full
+        return jsonify({'valid': False, 'error': 'Sorry, that team is already full (limit of 2 students per team)'})
     return jsonify({'valid': True})
