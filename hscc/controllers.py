@@ -143,8 +143,7 @@ def autocomplete_teams():
     school = School.query.filter(School.name.ilike(school_name)).first()
     if not school:
         return jsonify(**{})
-
-    return jsonify(json_list=[t.name for t in school.teams])
+    return jsonify(json_list=[t.name for t in school.teams if len(t.users) < 2])
 
 @mod_default.route('/autocomplete/languages', methods=['GET'])
 @mod_default.route('/autocomplete/languages/', methods=['GET'])
