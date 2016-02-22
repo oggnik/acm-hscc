@@ -159,7 +159,7 @@ def autocomplete_languages():
 def validate_register_email():
     """Checks an email address for potential conflicts"""
     email = request.args.get('email')
-    if len(email) == 0:
+    if not email:
         return jsonify({'valid': False, 'error': 'Please provide an email address'})
     user = User.query.filter_by(email=email).first()
     if user:
@@ -172,7 +172,7 @@ def validate_register_team():
     """Checks a team name for potential conflicts"""
     team = request.args.get('team')
     school_name = request.args.get('school')
-    if len(team) == 0:
+    if not team:
         # No team name
         return jsonify({'valid': False, 'error': 'Please specify a team name'})
 
