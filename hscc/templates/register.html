@@ -9,75 +9,111 @@
         {{ form.csrf_token }}
         {{ form.school_id }}
         <div class="form-group">
-            {{ form.name.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.name(class='form-control') }}
+            <div class="row">
+                {{ form.name.label(class='control-label col-sm-4') }}
+                <div class="col-sm-8">
+                    {{ form.name(class='form-control') }}
+                </div>
+            </div>
+        </div>
+        <div id="emailFormGroup" class="form-group" aria-describedby="emailHelpBlock">
+            <div class="row">
+                {{ form.email.label(class='control-label col-sm-4') }}
+                <div class="col-sm-8">
+                    {{ form.email(class='form-control') }}
+                    <span id="emailGlyph" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div id="emailHelpBlock" class="help-block col-sm-8 col-sm-offset-4"></div>
+            </div>
+        </div>
+        <div id="confirmEmailFormGroup"  class="form-group"  aria-describedby="confirmEmailHelpBlock">
+            <div class="row">
+                {{ form.confirm_email.label(class='control-label col-sm-4') }}
+                <div class="col-sm-8">
+                    {{ form.confirm_email(class='form-control') }}
+                    <span id="confirmEmailGlyph" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div id="confirmEmailHelpBlock" class="help-block col-sm-8 col-sm-offset-4"></div>
             </div>
         </div>
         <div class="form-group">
-            {{ form.email.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.email(class='form-control') }}
+            <div class="row">
+                {{ form.password.label(class='control-label col-sm-4') }}
+                <div class="col-sm-8">
+                    {{ form.password(class='form-control') }}
+                </div>
             </div>
         </div>
         <div class="form-group">
-            {{ form.confirm_email.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.confirm_email(class='form-control') }}
+            <div class="row">
+                {{ form.confirm_password.label(class='control-label col-sm-4') }}
+                <div class="col-sm-8">
+                    {{ form.confirm_password(class='form-control') }}
+                </div>
             </div>
         </div>
         <div class="form-group">
-            {{ form.password.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.password(class='form-control') }}
+            <div class="row">
+                {{ form.school_name.label(class='control-label col-sm-4') }}
+                <div class="col-sm-8">
+                    {{ form.school_name(class='form-control') }}
+                </div>
+            </div>
+        </div>
+        <div id="teamFormGroup" class="form-group" aria-describedby="teamHelpBlock">
+            <div class="row">
+                {{ form.team_name.label(class='control-label col-sm-4') }}
+                <div class="col-sm-8">
+                    {{ form.team_name(class='form-control') }}
+                    <span id="teamGlyph" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div id="teamHelpBlock" class="help-block col-sm-8 col-sm-offset-4"></div>
             </div>
         </div>
         <div class="form-group">
-            {{ form.confirm_password.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.confirm_password(class='form-control') }}
+            <div class="row">
+                {{ form.school_state.label(class='control-label col-sm-4') }}
+                <div class="col-sm-8">
+                    {{ form.school_state(class='form-control') }}
+                </div>
             </div>
         </div>
         <div class="form-group">
-            {{ form.school_name.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.school_name(class='form-control') }}
+            <div class="row">
+                {{ form.grade.label(class='control-label col-sm-4') }}
+                <div class="col-sm-8">
+                    {{ form.grade(class='form-control') }}
+                </div>
             </div>
         </div>
         <div class="form-group">
-            {{ form.team_name.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.team_name(class='form-control') }}
+            <div class="row">
+                {{ form.shirt_size.label(class='control-label col-sm-4') }}
+                <div class="col-sm-8">
+                    {{ form.shirt_size(class='form-control') }}
+                </div>
             </div>
         </div>
         <div class="form-group">
-            {{ form.school_state.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.school_state(class='form-control') }}
+            <div class="row">
+                {{ form.allergies_text.label(class='control-label col-sm-4') }}
+                <div class="col-sm-8">
+                    {{ form.allergies_text(class='form-control') }}
+                </div>
             </div>
         </div>
         <div class="form-group">
-            {{ form.grade.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.grade(class='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            {{ form.shirt_size.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.shirt_size(class='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            {{ form.allergies_text.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.allergies_text(class='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            {{ form.language.label(class='control-label col-sm-4') }}
-            <div class="col-sm-8">
-                {{ form.language(class='form-control') }}
+            <div class="row">
+                {{ form.language.label(class='control-label col-sm-4') }}
+                <div class="col-sm-8">
+                    {{ form.language(class='form-control') }}
+                </div>
             </div>
         </div>
         <div class="row">
@@ -112,6 +148,9 @@
         minChars: 1
     });
 
+    $('#emailGlyph').hide();
+    $('#emailHelpBlock').hide();
+
     $('#school_name').focus(function() {
         $.ajax({
             url: "{{ url_for('default.autocomplete_schools') }}",
@@ -137,6 +176,85 @@
             language.list = data['json_list'];
         });
     });
+
+    $('#email').focusout(function() {
+        $.ajax({
+            url: "{{ url_for('default.validate_register_email') }}",
+            data: {email: $('#email').val()}
+        }).done(function(data) {
+            var valid = data['valid'];
+            if (valid) {
+                $('#emailHelpBlock').text('');
+                $('#emailHelpBlock').hide();
+                $('#emailGlyph').removeClass('glyphicon-remove');
+                $('#emailGlyph').addClass('glyphicon-ok');
+                $('#emailGlyph').show();
+                $('#emailFormGroup').removeClass('has-error');
+                $('#emailFormGroup').addClass('has-success');
+                $('#emailFormGroup').addClass('has-feedback');
+            } else {
+                $('#emailHelpBlock').text(data['error']);
+                $('#emailHelpBlock').show();
+                $('#emailGlyph').addClass('glyphicon-remove');
+                $('#emailGlyph').removeClass('glyphicon-ok');
+                $('#emailGlyph').show();
+                $('#emailFormGroup').addClass('has-error');
+                $('#emailFormGroup').removeClass('has-success');
+                $('#emailFormGroup').addClass('has-feedback');
+            }
+        });
+    });
+
+    $('#confirm_email').focusout(function() {
+        if ($('#confirm_email').val() !== $('#email').val()) {
+            $('#confirmEmailHelpBlock').text('Emails must match');
+            $('#confirmEmailHelpBlock').show();
+            $('#confirmEmailGlyph').addClass('glyphicon-remove');
+            $('#confirmEmailGlyph').removeClass('glyphicon-ok');
+            $('#confirmEmailGlyph').show();
+            $('#confirmEmailFormGroup').addClass('has-error');
+            $('#confirmEmailFormGroup').removeClass('has-success');
+            $('#confirmEmailFormGroup').addClass('has-feedback');
+        } else {
+            $('#confirmEmailHelpBlock').text('');
+            $('#confirmEmailHelpBlock').hide();
+            $('#confirmEmailGlyph').removeClass('glyphicon-remove');
+            $('#confirmEmailGlyph').addClass('glyphicon-ok');
+            $('#confirmEmailGlyph').show();
+            $('#confirmEmailFormGroup').removeClass('has-error');
+            $('#confirmEmailFormGroup').addClass('has-success');
+            $('#confirmEmailFormGroup').addClass('has-feedback');
+        }
+    });
+
+    $('#team_name').focusout(function() {
+        $.ajax({
+            url: "{{ url_for('default.validate_register_team') }}",
+            data: {team: $('#team_name').val(), school: $('#school_name').val()}
+        }).done(function(data) {
+            var valid = data['valid'];
+            if (valid) {
+                $('#teamHelpBlock').text('');
+                $('#teamHelpBlock').hide();
+                $('#teamGlyph').removeClass('glyphicon-remove');
+                $('#teamGlyph').addClass('glyphicon-ok');
+                $('#teamGlyph').show();
+                $('#teamFormGroup').removeClass('has-error');
+                $('#teamFormGroup').addClass('has-success');
+                $('#teamFormGroup').addClass('has-feedback');
+            } else {
+                $('#teamHelpBlock').text(data['error']);
+                $('#teamHelpBlock').show();
+                $('#teamGlyph').addClass('glyphicon-remove');
+                $('#teamGlyph').removeClass('glyphicon-ok');
+                $('#teamGlyph').show();
+                $('#teamFormGroup').addClass('has-error');
+                $('#teamFormGroup').removeClass('has-success');
+                $('#teamFormGroup').addClass('has-feedback');
+            }
+        });
+    });
+
 </script>
 
 {% endblock %}

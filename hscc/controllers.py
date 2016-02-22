@@ -20,6 +20,7 @@ from hscc.forms import RegistrationForm
 from hscc.models import Language
 from hscc.models import School
 from hscc.models import Team
+from hscc.models import User
 
 mod_default = Blueprint('default', __name__)
 
@@ -151,3 +152,36 @@ def autocomplete_languages():
     """Return a list of languages for the autocomplete field"""
     languages = Language.query.all()
     return jsonify(json_list=[language.name for language in languages])
+
+
+@mod_default.route('/validate/register/email', methods=['GET'])
+def validate_register_email():
+    """Checks an email address for potential conflicts"""
+    email = request.args.get('email')
+    if not email:
+        return jsonify({'valid': False, 'error': 'Please provide an email address'})
+    user = User.query.filter_by(email=email).first()
+    if user:
+        # The email already exists
+        return jsonify({'valid': False, 'error': 'An account with that email address has already registered'})
+    return jsonify({'valid': True})
+
+@mod_default.route('/validate/register/team', methods=['GET'])
+def validate_register_team():
+    """Checks a team name for potential conflicts"""
+    team = request.args.get('team')
+    school_name = request.args.get('school')
+    if not team:
+        # No team name
+        return jsonify({'valid': False, 'error': 'Please specify a team name'})
+
+    school = School.query.filter(School.name.ilike(school_name)).first()
+    team = Team.query.filter(Team.name.ilike(team)).first()
+    if team and school:
+        if team.school.id != school.id:
+            # The team is already registered to another school
+            return jsonify({'valid': False, 'error': 'Sorry, that team name is already registered at another school'})
+    if team and len(team.users) == 2:
+        # The team alread is full
+        return jsonify({'valid': False, 'error': 'Sorry, that team is already full (limit of 2 students per team)'})
+    return jsonify({'valid': True})
