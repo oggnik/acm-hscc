@@ -5,7 +5,7 @@
 </div>
 
 <div class="col-md-6">
-    <form method="POST" action="{{ url_for('default.register') }}" class="form-horizontal">
+    <form class="form-horizontal">
         {{ form.csrf_token }}
         {{ form.school_id }}
         <div class="form-group">
@@ -122,35 +122,32 @@
             </div>
         </div>
         <div class="form-group">
+            <div class="alert alert-danger alert-dismissible" role="alert">Registration is now closed.  Please contact <a href="mailto:acm@purdue.edu?Subject=HSCC%20Contact%20Us" target="_top">us</a> immediately if you wish to still apply.</div>
             <div class="col-sm-offset-4 col-sm-6">
-                <button type="submit" class="btn btn-primary">Register</button>
+                <button class="btn btn-primary" disabled>Register</button>
             </div>
         </div>
     </form>
 </div>
 
-<script>
+<!--<script>
     var school_name = document.getElementById("school_name");
     school_name = new Awesomplete(school_name, {
         list: [],
         minChars: 1
     });
-
     var team_name = document.getElementById("team_name");
     team_name = new Awesomplete(team_name, {
         list: [],
         minChars: 1
     });
-
     var language = document.getElementById("language");
     language = new Awesomplete(language, {
         list: [],
         minChars: 1
     });
-
     $('#emailGlyph').hide();
     $('#emailHelpBlock').hide();
-
     $('#school_name').focus(function() {
         $.ajax({
             url: "{{ url_for('default.autocomplete_schools') }}",
@@ -158,7 +155,6 @@
             school_name.list = data['json_list'];
         });
     });
-
     $('#team_name').focus(function() {
         console.log('Load teams from ' + $('#school_name').val());
         $.ajax({
@@ -168,7 +164,6 @@
             team_name.list = data['json_list'];
         });
     });
-
     $('#language').focus(function() {
         $.ajax({
             url: "{{ url_for('default.autocomplete_languages') }}",
@@ -176,7 +171,6 @@
             language.list = data['json_list'];
         });
     });
-
     $('#email').focusout(function() {
         $.ajax({
             url: "{{ url_for('default.validate_register_email') }}",
@@ -204,7 +198,6 @@
             }
         });
     });
-
     $('#confirm_email').focusout(function() {
         if ($('#confirm_email').val() !== $('#email').val()) {
             $('#confirmEmailHelpBlock').text('Emails must match');
@@ -226,7 +219,6 @@
             $('#confirmEmailFormGroup').addClass('has-feedback');
         }
     });
-
     $('#team_name').focusout(function() {
         $.ajax({
             url: "{{ url_for('default.validate_register_team') }}",
@@ -254,7 +246,6 @@
             }
         });
     });
-
-</script>
+</script>-->
 
 {% endblock %}
