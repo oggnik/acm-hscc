@@ -5,7 +5,7 @@
 </div>
 
 <div class="col-md-6">
-    <form class="form-horizontal">
+    <form method="POST" action="{{ url_for('default.register') }}" class="form-horizontal">
         {{ form.csrf_token }}
         {{ form.school_id }}
         <div class="form-group">
@@ -122,15 +122,14 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="alert alert-danger alert-dismissible" role="alert">Registration is now closed.  Please contact <a href="mailto:acm@purdue.edu?Subject=HSCC%20Contact%20Us" target="_top">us</a> immediately if you wish to still apply.</div>
             <div class="col-sm-offset-4 col-sm-6">
-                <button class="btn btn-primary" disabled>Register</button>
+                <button type="submit" class="btn btn-primary">Register</button>
             </div>
         </div>
     </form>
 </div>
 
-<!--<script>
+<script>
     var school_name = document.getElementById("school_name");
     school_name = new Awesomplete(school_name, {
         list: [],
@@ -246,6 +245,6 @@
             }
         });
     });
-</script>-->
+</script>
 
 {% endblock %}
