@@ -107,6 +107,7 @@ class PasswordReset(db.Model):
                 for _ in range(60)
             )
         self.user = user
+        self.email = user.email
         self.key = key
         # Add one additional day so the user can potentially reset their password at midnight
         self.expiration = datetime.datetime.now() + datetime.timedelta(days=8)
@@ -118,7 +119,7 @@ class PasswordReset(db.Model):
     def send(self):
         """Send the PasswordReset"""
         title = 'Reset Your ACM-HSCC Password'
-        url = '{site}/resetpass/{key}'.format(
+        url = '{site}/reset_pass/{key}'.format(
             site=os.environ['ACM_HSCC_SITE_URL'],
             key=self.key,
         )
