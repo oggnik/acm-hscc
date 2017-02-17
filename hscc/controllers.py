@@ -113,6 +113,7 @@ def forgot():
 def reset_pass(key):
     """Render the reset password page for the ACM-HSCC site"""
     form = NewPasswordForm()
+    form.key.data = key
 
     if form.validate_on_submit():
         form.user.set_password(form.password.data)
@@ -125,7 +126,8 @@ def reset_pass(key):
     else:
         flash_form_errors(form)
         form.key.data = key
-        return render_template('reset_pass.html', form=form)
+        # NOTE: This render_template is causing a 404
+        return render_template('reset_pass.html', form=form, key=key)
 
 
 @mod_default.route('/autocomplete/schools', methods=['GET'])
