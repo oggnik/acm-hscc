@@ -24,9 +24,9 @@
                         <b>(Full)</b>
                     {% endif %}
                 </td>
-                {% if team.users|length < 2 and current_user.school.id == team.school.id %}
+                {% if team.users|length < 2 and current_user.school.id == team.school.id and current_user.team_id != team.id%}
                     <td>
-                        <a class="btn btn-primary" href="{{ url_for('account.join_team', id=team.id) }}">
+                        <a class="btn btn-primary " href="{{ url_for('account.join_team', id=team.id) }}">
                             Join Team
                         </a>
                     </td>

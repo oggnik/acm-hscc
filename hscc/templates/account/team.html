@@ -6,7 +6,7 @@
         {{ team.name }} &ndash; {{ team.school.name }}, {{ team.school.state_name }}
         {% if true or current_user.school.id == team.school.id %}
         <span class="pull-right">
-            <a class="btn btn-primary {% if team.users|length == 2 %}disabled {% endif %}"
+            <a class="btn btn-primary {% if team.users|length == 2 or current_user.team_id == team.id%}disabled {% endif %}"
                href="{{ url_for('account.join_team', id=team.id) }}">
                 Join Team
             </a>
