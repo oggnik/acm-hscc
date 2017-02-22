@@ -1,2 +1,2 @@
 #!/bin/bash
-uwsgi --plugins python -s 127.0.0.1:3031 -w hscc:app --processes 4 --threads 2
+uwsgi -s 127.0.0.1:3205 --manage-script-name --mount /hscc=hscc:app --processes 4 --threads 2 --plugins python
