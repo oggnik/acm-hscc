@@ -154,6 +154,13 @@
             school_name.list = data['json_list'];
         });
     });
+    // Prevent enter from submitting form.  This is easy to do with the autocomplete.
+    $('#school_name').keydown(function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
     $('#team_name').focus(function() {
         console.log('Load teams from ' + $('#school_name').val());
         $.ajax({
@@ -162,6 +169,13 @@
         }).done(function(data) {
             team_name.list = data['json_list'];
         });
+    });
+    // Prevent enter from submitting form.  This is easy to do with the autocomplete.
+    $('#team_name').keydown(function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+        }
     });
     $('#language').focus(function() {
         $.ajax({
