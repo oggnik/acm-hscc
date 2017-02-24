@@ -56,3 +56,9 @@ server {
 }
 ```
 4. If you want to have acm.cs.purdue.edu/hscc link to the website, set up a reverse proxy on the acm website.
+
+
+## Admin Usage
+Before making the site public, be sure to register yourself as an admin.  To do this, go through the registration procedure on the website.  Then, modify the database to grant yourself admin abilities.  Ideally have another member also register themselves to the same team.  This will prevent students from joining the admin team on accident.
+
+*Future Improvement: Add the ability to make teams/schools admin only, restricting who can join them. (Issue: #58)*
