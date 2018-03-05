@@ -1,3 +1,4 @@
+import os
 import sys
 
 from flask import Flask
@@ -35,7 +36,7 @@ sys.stdout.write('Done\n')
 sys.stdout.write('Creating LoginManager...')
 sys.stdout.flush()
 login_manager = LoginManager(app)
-login_manager.login_view = '/login'
+login_manager.login_view = 'default.login'
 sys.stdout.write('Done\n')
 
 # Configure SMTP client
