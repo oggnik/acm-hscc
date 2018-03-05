@@ -70,7 +70,7 @@ class RegistrationForm(Form):
             return False
 
         self.user = User(
-            name=self.name.data,
+            name=self.first_name.data + ' ' + self.last_name.data,
             email=self.email.data,
             password=self.password.data,
             grade=self.grade.data,
@@ -85,10 +85,17 @@ class RegistrationForm(Form):
 
 
     # Fields for a RegistrationForm
-    name = TextField(
-        'Full Name',
+    first_name = TextField(
+        'First Name',
         validators=[
-            validators.Required(message='You must provide your full name'),
+            validators.Required(message='You must provide your first name'),
+        ],
+    )
+
+    last_name = TextField(
+        'Last Name',
+        validators=[
+            validators.Required(message='You must provide your last name'),
         ],
     )
 
